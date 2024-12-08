@@ -16,10 +16,10 @@ A book library application to allow users to search, browers and add books to th
 ## Setup
 1. Clone repository.
 2. Install dependecies:
-   '''bash 
+   ```bash 
    npm install
-   '''
+   ```
 3. Run the app
-   '''bash
+   ```bash
    npm run dev
-   '''
+   ```
