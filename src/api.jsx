@@ -1,20 +1,18 @@
 // src/api.js
 import axios from 'axios';
 
-const API_KEY = 'my-book-library-444120'; 
-
 export const fetchBooks = async (query) => {
   try {
-    const response = await axios.get(`https://www.googleapis.com/books/v1/volumes`, {
+    // Open Library API URL for searching books
+    const response = await axios.get('https://openlibrary.org/search.json', {
       params: {
-        q: query,
-        key: API_KEY,
-        maxResults: 10,  // Limits the number of books returned
+        q: query, // The search query (title, author, etc.)
+        limit: 10, // Limits the number of books returned
       },
     });
-    return response.data.items; // Returns the book items
+    return response.data.docs; // Returns the book items from Open Library API
   } catch (error) {
     console.error('Error fetching books:', error);
-    return [];
+    return []; // Return an empty array if there's an error
   }
 };
