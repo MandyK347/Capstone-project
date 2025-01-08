@@ -1,44 +1,64 @@
 // src/components/BookDetails.jsx
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { fetchBookDetails } from '../api';  // Import API function to fetch detailed book data
 
 const BookDetails = ({ bookKey, onBack }) => {
-    const [bookDetails, setBookDetails] = useState(null);
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchBookDetails = async () => {
-            try {
-                const response = await axios.get('https://openlibrary.org/api/books?bibkeys=OLID:${bookKey}&format=json&jscmd=data');
-                const details = response.data['OLID:${bookKey}'];
-                setBookDetails(details);
-            } catch (error) {
-                console.error('Error fetching book details:, error');
-            }
-        };
-        fetchBookDetails();
-    }, [bookKey]);
+  // Fetch detailed book info
+  useEffect(() => {
+    const getBookDetails = async () => {
+      const data = await fetchBookDetails(bookKey);
+      setBook(data);
+      setLoading(false);
+    };
 
-    if (!bookDetails) return <div>Loading...</div>;
+    getBookDetails();
+  }, [bookKey]);
 
-    return (
-        <div className="p-4 max-w-2xl mx-auto">
-            <button
-               onClick={onBack}
-               className="px-4 py-2 bg-gray-500 text-white rounded-md mb-4"
-            >
-                Back to Search
-            </button>
-            <img
-              src={'https://covers.openlibrary.org/b/id/${bookDetails.cover_id}-L.jpg'}
-              alt={bookDetails.tilte}
-              className="w-full h-96 objecj-cover"
-            />
-            <h3 className="mt-4 font-bold text-3xl">{bookDetails.title}</h3>
-            <p className="text-xl text-gray-700">{bookDetails.authors?.map(author => author.name).join(', ')}</p>
-            <p className="text-gray-500 mt-2">{bookDetails.publish_date}</p>
-            <p className="mt-4">{bookDetails.description?.value || 'No description available.'}</p>
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto p-4">
+      <button 
+        onClick={onBack} 
+        className="mb-4 p-2 bg-blue-500 text-white rounded-md"
+      >
+        Back to Search Results
+      </button>
+
+      <div className="flex flex-col sm:flex-row items-center">
+        {/* Book Cover */}
+        {book.cover && (
+          <img 
+            src={book.cover} 
+            alt={book.title} 
+            className="w-48 h-72 object-cover rounded-md mb-4 sm:mb-0 sm:mr-8" 
+          />
+        )}
+
+        <div>
+          {/* Book Title */}
+          <h1 className="text-3xl font-bold mb-2">{book.title}</h1>
+
+          {/* Book Details */}
+          <p className="text-lg mb-2"><strong>Author(s):</strong> {book.authors?.join(', ')}</p>
+          <p className="text-lg mb-2"><strong>Publisher:</strong> {book.publisher || 'Unknown'}</p>
+          <p className="text-lg mb-2"><strong>Published:</strong> {book.publishDate || 'Unknown'}</p>
+          <p className="text-lg mb-2"><strong>Pages:</strong> {book.pages || 'N/A'}</p>
+
+          {/* Description */}
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-2">Description</h2>
+            <p>{book.description || 'No description available.'}</p>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default BookDetails;

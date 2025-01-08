@@ -1,8 +1,8 @@
 // src/components/BookSearch.jsx
 import React, { useState } from 'react';
-import { fetchBooks } from '../api';  // Import the API function
+import { fetchBooks } from '../api';
 
-const BookSearch = () => {
+const BookSearch = ({ onBookClick }) => {
   const [query, setQuery] = useState('');
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,15 +38,22 @@ const BookSearch = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
         {books.length > 0 ? (
           books.map((book) => (
-            <div key={book.id} className="p-4 border border-gray-300 rounded-md">
-              <img
-                src={book.volumeInfo.imageLinks?.thumbnail}
-                alt={book.volumeInfo.title}
-                className="w-full h-48 object-cover rounded-md mb-4"
-              />
-              <h2 className="text-xl font-semibold">{book.volumeInfo.title}</h2>
-              <p className="text-sm text-gray-600">{book.volumeInfo.authors?.join(', ')}</p>
-              <p className="mt-2 text-gray-700">{book.volumeInfo.description?.slice(0, 150)}...</p>
+            <div
+              key={book.key}
+              className="p-4 border border-gray-300 rounded-md cursor-pointer"
+              onClick={() => onBookClick(book.key)} // Trigger selection on click
+            >
+              {book.cover_i && (
+                <img
+                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+                  alt={book.title}
+                  className="w-full h-48 object-cover rounded-md mb-4"
+                />
+              )}
+              <h2 className="text-xl font-semibold">{book.title}</h2>
+              <p className="text-sm text-gray-600">
+                {book.author_name?.join(', ') || 'Unknown Author'}
+              </p>
             </div>
           ))
         ) : (
