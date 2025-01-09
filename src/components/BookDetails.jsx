@@ -45,10 +45,12 @@ const BookDetails = ({ bookKey, onBack }) => {
           <h1 className="text-3xl font-bold mb-2">{book.title}</h1>
 
           {/* Book Details */}
-          <p className="text-lg mb-2"><strong>Author(s):</strong> {book.authors?.join(', ')}</p>
-          <p className="text-lg mb-2"><strong>Publisher:</strong> {book.publisher || 'Unknown'}</p>
-          <p className="text-lg mb-2"><strong>Published:</strong> {book.publishDate || 'Unknown'}</p>
-          <p className="text-lg mb-2"><strong>Pages:</strong> {book.pages || 'N/A'}</p>
+          <p className="text-lg mb-2"><strong>Author(s):</strong> {book.authors}</p>
+          <p className="text-lg mb-2"><strong>Publisher:</strong> {book.publisher}</p>
+          <p className="text-lg mb-2"><strong>Published:</strong> {book.publishDate}</p>
+          <p className="text-lg mb-2"><strong>ISBN:</strong> {book.isbn}</p>
+          <p className="text-lg mb-2"><strong>Pages:</strong> {book.pages}</p>
+          <p className="text-lg mb-2"><strong>Genres:</strong> {book.genre}</p>
 
           {/* Description */}
           <div className="mt-4">

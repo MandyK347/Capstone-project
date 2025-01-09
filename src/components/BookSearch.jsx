@@ -21,7 +21,7 @@ const BookSearch = ({ onBookClick }) => {
       <h1 className="text-3xl font-bold text-center mb-4">Search for Books</h1>
       <input
         type="text"
-        className="w-full p-2 border border-gray-300 rounded-md"
+        className="w-full p-2 border border-pink-300 rounded-md"
         placeholder="Search by book title or author"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -40,7 +40,7 @@ const BookSearch = ({ onBookClick }) => {
           books.map((book) => (
             <div
               key={book.key}
-              className="p-4 border border-gray-300 rounded-md cursor-pointer"
+              className="p-4 border border-pink-300 rounded-md cursor-pointer"
               onClick={() => onBookClick(book.key)} // Trigger selection on click
             >
               {book.cover_i && (
@@ -51,7 +51,7 @@ const BookSearch = ({ onBookClick }) => {
                 />
               )}
               <h2 className="text-xl font-semibold">{book.title}</h2>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-pink-600">
                 {book.author_name?.join(', ') || 'Unknown Author'}
               </p>
             </div>
