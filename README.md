@@ -5,12 +5,11 @@ A book library application to allow users to search, browers and add books to th
 ## Features
 - Search and filter books by title, author, or the ISBN.
 - Get book information e.g title, author, description, publication, cover etc.
-- Add books you like to your collection.
 
 ## Technologies used
 - React
 - Tailwind CSS
-- Google Books API
+- Open Library API
 - Axios for API requests
 
 ## Setup
